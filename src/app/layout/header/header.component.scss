@@ -1,0 +1,33 @@
+@import "../../../styles/variables.scss";
+
+.bg-primary {
+  background-color: $second-color !important;
+}
+.animation {
+    background: linear-gradient(to right,
+            #3925ef 20%,
+            #6f4ded 40%,
+            #5666f4 60%,
+            rgb(26, 90, 237) 80%);
+    background-size: 200%;
+    background-clip: text;
+    color: transparent;
+    font-weight: 750;
+    animation: text 6s linear infinite;
+  }
+  
+  @keyframes text {
+    to {
+        background-position: 200% center;
+    }
+  }
+  
+  @keyframes loop {
+    from {
+        transform: translateX(0);
+    }
+  
+    to {
+        transform: translateX(-50%);
+    }
+  }
