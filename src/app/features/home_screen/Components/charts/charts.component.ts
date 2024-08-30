@@ -3,39 +3,64 @@ import { ChartModule } from 'primeng/chart';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
-import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { CommonModule } from '@angular/common';
 
 interface City {
   name: string;
-  code: string;
+  code: number;
 }
 
 @Component({
   selector: 'app-charts',
   standalone: true,
   imports: [ChartModule, FormsModule, DropdownModule,
-    CardModule, AvatarModule],
+    CardModule, ButtonModule, CommonModule],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss'
 })
 export class ChartsComponent implements OnInit{
+  fechaActual: Date = new Date();
+  total:Number = 10000;
+    options_bar : any;
     basicData: any;
     data: any;
     cities: City[] | undefined;
     selectedProvince: City | undefined;
+    candidates_list = ['Luisa González', 'Pedro Granja', 'Daniel Noboa', 'Francesco Tabacchi']
 
     ngOnInit(): void {
       
       this.cities = [
-        { name: 'Azuay', code: 'AZ' },
-        { name: 'Bolivar', code: 'BO' },
-        { name: 'Cañar', code: 'CÑ' },
-        { name: 'Carchi', code: 'CH' },
-        { name: 'El Oro', code: 'EO' }
-      ];
+        { name: 'Ecuador', code: 0 },
+        { name: 'Azuay', code: 1 },
+        { name: 'Bolívar', code: 2 },
+        { name: 'Cañar', code: 3 },
+        { name: 'Carchi', code: 4 },
+        { name: 'Chimborazo', code: 5 },
+        { name: 'Cotopaxi', code: 6 },
+        { name: 'El Oro', code: 7 },
+        { name: 'Esmeraldas', code: 8 },
+        { name: 'Galápagos', code: 9 },
+        { name: 'Guayas', code: 10 },
+        { name: 'Imbabura', code: 11 },
+        { name: 'Loja', code: 12 },
+        { name: 'Los Ríos', code: 13 },
+        { name: 'Manabí', code: 14 },
+        { name: 'Morona Santiago', code: 15 },
+        { name: 'Napo', code: 16 },
+        { name: 'Orellana', code: 17 },
+        { name: 'Pastaza', code: 18 },
+        { name: 'Pichincha', code: 19 },
+        { name: 'Santa Elena', code: 20 },
+        { name: 'Santo Domingo', code: 21 },
+        { name: 'Sucumbíos', code: 22 },
+        { name: 'Tungurahua', code: 23 },
+        { name: 'Zamora Chinchipe', code: 24 }
+    ];
 
       this.basicData = {
-        labels: ['Lista 1', 'Lista 2', 'Lista 3', 'Lista 4'],
+        labels: this.candidates_list,
         datasets: [
           {
             label: 'Votos',
@@ -47,12 +72,25 @@ export class ChartsComponent implements OnInit{
         ]
       };
 
+      this.options_bar = {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        aspectRatio: 0.8,
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'rgb(0, 0, 0)'
+                }
+            }
+        },
+      }
+
       this.data = {
         labels: ['Válidos', 'Nulos', 'Blancos'],
         datasets: [
             {
                 data: [300, 50, 100],
-                backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+                backgroundColor: ['rgba(255, 159, 64, 0.7)', 'rgba(75, 192, 192, 0.7)', 'rgba(54, 162, 235, 0.7)'],
                 hoverBackgroundColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)']
             }
         ]

@@ -1,14 +1,39 @@
 @import '../../../../../styles/variables.scss';
 
 h1 {
-    background: black;
-    color: white;
+    background: $primaty_color;
+    color: $text_color;
     text-align: center;
     font-size: large;
     padding: 4px;
+    font-weight: bold;
 }
 
 .div-card {
     width: 250px;
     text-align: center;
+    border-radius: 5px;
+    border: 2px solid $primaty_color;
+    padding-bottom: 8px;
+    margin: 3px;
+}
+
+.button {
+    background: $text_color;
+    color: $primaty_color;
+    border-radius: 3px;
+    border: 1px solid $primaty_color;
+    padding: 4px;
+    width: 90%;
+    :hover {
+        font-weight: bold;
+        border: 2px solid $primaty_color;
+    }
+}
+.titulo-principal {
+    color: $primaty_color;
+    font-weight: bold;
+    font-size: 28px;
+    margin-left: 20px;
+    border-bottom: 2px solid $primaty_color;
 }

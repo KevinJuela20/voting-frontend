@@ -1,0 +1,124 @@
+
+.animation {
+    background: linear-gradient(to right,
+            #c0d4d1 20%,
+            #94f3e3 40%,
+            #74ada4 60%,
+            #83ebda 80%);
+    background-size: 200%;
+    background-clip: text;
+    color: transparent;
+    font-weight: 750;
+    animation: text 4s linear infinite;
+}
+  
+  @keyframes text {
+    to {
+        background-position: 200% center;
+    }
+  }
+  
+  @keyframes loop {
+    from {
+        transform: translateX(0);
+    }
+  
+    to {
+        transform: translateX(-50%);
+    }
+  }
+  
+  
+  .logo {
+    width: 80px;
+    height: 80px;
+    position: relative;
+  }
+  .logo img {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    margin: 25%;
+  }
+  .logo div {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    margin-top: 10px;
+    margin-left: 13px;
+    border-radius: 20%;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+    mix-blend-mode: normal;
+    -webkit-animation: 2s cubic-bezier(0.66, -0.7, 0.27, 1.6) infinite;
+            animation: 2s cubic-bezier(0.66, -0.7, 0.27, 1.6) infinite;
+  }
+  .logo div:nth-child(1) {
+    background-color: #8e668f;
+    -webkit-animation-name: rotate-1;
+            animation-name: rotate-1;
+  }
+  .logo div:nth-child(2) {
+    background-color: #ff65ff;
+    -webkit-animation-name: rotate-2;
+            animation-name: rotate-2;
+  }
+  .logo div:nth-child(3) {
+    background-color: #9238eb;
+    -webkit-animation-name: rotate-3;
+            animation-name: rotate-3;
+  }
+  @-webkit-keyframes rotate-1 {
+    to {
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+    }
+  }
+  @keyframes rotate-1 {
+    to {
+      -webkit-transform: rotate(135deg);
+              transform: rotate(135deg);
+    }
+  }
+  @-webkit-keyframes rotate-2 {
+    to {
+      -webkit-transform: rotate(225deg);
+              transform: rotate(225deg);
+    }
+  }
+  @keyframes rotate-2 {
+    to {
+      -webkit-transform: rotate(225deg);
+              transform: rotate(225deg);
+    }
+  }
+  @-webkit-keyframes rotate-3 {
+    to {
+      -webkit-transform: rotate(315deg);
+              transform: rotate(315deg);
+    }
+  }
+  @keyframes rotate-3 {
+    to {
+      -webkit-transform: rotate(315deg);
+              transform: rotate(315deg);
+    }
+  }
+  
+  .hamburger-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .menu {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (min-width: 768px) {
+    .hamburger-button, .menu {
+      display: none;
+    }
+  }
+  

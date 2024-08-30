@@ -1,28 +1,42 @@
 
-<div class="card">
-    <div class="flex sm:flex-row flex-col justify-around sm:m-[2%]">
-        <div class="div-card">
-            <h1>PRESIDENTE</h1>
-            <p-dropdown
-                [styleClass]="'mt-4'"
-                [style]="{'width':'230px'}"
-                [options]="cities" 
-                [(ngModel)]="selectedProvince" 
-                optionLabel="name" 
-                placeholder="Selecione provincia" />
+<div class="">
+    <div class="d-flex justify-center p-4">
+        <p class="titulo-principal">Intención de voto - Presidente Ecuador 2025-2029</p>
+    </div>
+    <div class="flex sm:flex-row flex-col justify-center items-center sm:justify-around sm:m-[2%]">
+        <div class="justify-center">
+            <div class="div-card">
+                <h1>TOTAL VOTOS</h1>
+                <p class="text-2xl mt-4">{{total}}</p>
+            </div>
+            <br>
+            <div class="div-card">
+                <h1>PRESIDENTE</h1>
+                <p-dropdown
+                    [styleClass]="'mt-4'"
+                    [style]="{'width':'230px'}"
+                    [options]="cities" 
+                    [(ngModel)]="selectedProvince" 
+                    optionLabel="name" 
+                    placeholder="Selecione provincia" />
+            </div>
         </div>
-        <div class="div-card">
-            <h1>TOTAL VOTOS</h1>
-            <p class="text-2xl mt-4">10000</p>
-        </div>
-        <div class="div-card">
+        <div class="m-4">
             <p-chart type="doughnut" [data]="data"  />
         </div>
+        <div>
+            <div class="div-card">
+                <h1>Expresa tu intensión</h1>
+                <br>
+                <p-button label="🗳️ Votar" 
+                styleClass="w-[90%] border-2 border-[#127d6b] text-[#127d6b] text-bold hover:bg-[#127d6b] hover:text-white p-2" />
+            </div>
+        </div>
     </div>
-    <div class="m-20 justify-center">
-        <h1>Intensiones de voto</h1>
-        <h2>Fecha de corte: </h2>
-        <p-chart type="bar" [data]="basicData" />
+    <div class="p-10 justify-center">
+
+        <h1 style="border-radius: 15px 15px 0 0;">Intensiones de voto {{selectedProvince?.name}} - Fecha de corte: {{ fechaActual | date:'dd/MM/yyyy' }}</h1>
+        <p-chart type="bar" [data]="basicData" [options]="options_bar"/>
     </div>
     
 </div>
