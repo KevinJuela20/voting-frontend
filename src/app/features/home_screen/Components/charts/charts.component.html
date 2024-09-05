@@ -7,7 +7,7 @@
         <div class="justify-center">
             <div class="div-card">
                 <h1>TOTAL VOTOS</h1>
-                <p class="text-2xl mt-4">{{total}}</p>
+                <p class="text-2xl mt-4"><b>{{total}}</b></p>
             </div>
             <br>
             <div class="div-card">
@@ -28,7 +28,7 @@
             <div class="div-card">
                 <h1>Expresa tu intensión</h1>
                 <br>
-                <p-button label="🗳️ Votar" 
+                <p-button label="🗳️ Votar" (onClick)="showDialog()" 
                 styleClass="w-[90%] border-2 border-[#127d6b] text-[#127d6b] text-bold hover:bg-[#127d6b] hover:text-white p-2" />
             </div>
         </div>
@@ -38,5 +38,14 @@
         <h1 style="border-radius: 15px 15px 0 0;">Intensiones de voto {{selectedProvince?.name}} - Fecha de corte: {{ fechaActual | date:'dd/MM/yyyy' }}</h1>
         <p-chart type="bar" [data]="basicData" [options]="options_bar"/>
     </div>
+
+    <p-sidebar [(visible)]="votingSideBar"
+          [fullScreen]="true"
+          [baseZIndex]="10"
+          styleClass="side">
+
+          <app-voting-screen />
+    </p-sidebar>
+
     
 </div>

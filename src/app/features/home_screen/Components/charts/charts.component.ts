@@ -2,9 +2,12 @@ import {  Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
+import { VotingScreenComponent } from '../voting-screen/voting-screen.component';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog'
+import { TableModule } from 'primeng/table';
+import { SidebarModule } from 'primeng/sidebar';
 
 interface City {
   name: string;
@@ -14,20 +17,30 @@ interface City {
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [ChartModule, FormsModule, DropdownModule,
-    CardModule, ButtonModule, CommonModule],
+  imports: [ChartModule, TableModule, DropdownModule,
+    FormsModule , ButtonModule, CommonModule, DialogModule,
+    SidebarModule, VotingScreenComponent],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss'
 })
 export class ChartsComponent implements OnInit{
   fechaActual: Date = new Date();
   total:Number = 10000;
-    options_bar : any;
-    basicData: any;
-    data: any;
-    cities: City[] | undefined;
-    selectedProvince: City | undefined;
-    candidates_list = ['Luisa González', 'Pedro Granja', 'Daniel Noboa', 'Francesco Tabacchi']
+  options_bar : any;
+  basicData: any;
+  data: any;
+  cities: City[] | undefined;
+  selectedProvince: City | undefined;
+  candidates_list = ['Luisa González', 'Pedro Granja', 'Daniel Noboa', 'Francesco Tabacchi']
+  //
+  votingSideBar: boolean = false;
+
+
+  // Aspectos de votación
+  showDialog() {
+      this.votingSideBar = true;
+  }
+  
 
     ngOnInit(): void {
       
@@ -59,6 +72,7 @@ export class ChartsComponent implements OnInit{
         { name: 'Zamora Chinchipe', code: 24 }
     ];
 
+    //Gráfico de barras
       this.basicData = {
         labels: this.candidates_list,
         datasets: [
@@ -72,6 +86,7 @@ export class ChartsComponent implements OnInit{
         ]
       };
 
+      //Configuración horizontal
       this.options_bar = {
         indexAxis: 'y',
         maintainAspectRatio: false,
@@ -85,13 +100,14 @@ export class ChartsComponent implements OnInit{
         },
       }
 
+      //Gráfico de dona
       this.data = {
         labels: ['Válidos', 'Nulos', 'Blancos'],
         datasets: [
             {
                 data: [300, 50, 100],
-                backgroundColor: ['rgba(255, 159, 64, 0.7)', 'rgba(75, 192, 192, 0.7)', 'rgba(54, 162, 235, 0.7)'],
-                hoverBackgroundColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)']
+                backgroundColor: ['rgba(255, 159, 64, 0.7)', 'rgba(127, 229, 228, 0.7)', 'rgba(134, 223, 157, 0.7)'],
+                hoverBackgroundColor: ['rgb(255, 159, 64)', 'rgb(127, 229, 228 )', 'rgb(134, 223, 157)']
             }
         ]
       };
