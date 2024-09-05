@@ -1,13 +1,29 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-login-design',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login-design.component.html',
   styleUrl: './login-design.component.scss'
 })
 export class LoginDesignComponent implements AfterViewInit {
+
+  name:string = '';
+  provinces:string[] = [
+    'Azuay', 'Bolívar', 'Cañar', 'Carchi', 'Chimborazo', 'Cotopaxi', 'El Oro', 'Esmeraldas',
+    'Galápagos', 'Guayas', 'Imbabura', 'Loja', 'Los Ríos', 'Manabí', 'Morona Santiago',
+    'Napo', 'Orellana', 'Pastaza', 'Pichincha', 'Santa Elena', 'Santo Domingo de los Tsáchilas',
+    'Sucumbíos', 'Tungurahua', 'Zamora Chinchipe'
+  ];
+  age:number | null = null;
+  email:string = '';
+  password:string = '';
+  selectedProvince:string = '';
 
   @ViewChild('signInBtn') signInBtn!: ElementRef<HTMLButtonElement>;
   @ViewChild('signUpBtn') signUpBtn!: ElementRef<HTMLButtonElement>;
@@ -36,6 +52,20 @@ export class LoginDesignComponent implements AfterViewInit {
       container.classList.remove('sign-up-mode2')
     });
   }
+  //prueba de inicio de sesion
+  datosInicioSesion():void{
+    console.log('mi correo: ', this.email)
+    console.log('mi password: ', this.password)
+  }
 
+  //prueba de crear sesion
+  datosCrearSesion():void{
+    console.log('mi correo: ', this.email)
+    console.log('mi password: ', this.password)
+    console.log('mi nombre: ', this.name)
+    console.log('mi edad: ', this.age)
+    console.log('mi provincia: ', this.selectedProvince)
+    
+  }
 
 }

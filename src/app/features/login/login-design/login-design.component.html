@@ -1,18 +1,20 @@
 <div class="fondo flex items-center justify-center min-h-screen">
   <div class="container relative w-[80vw] h-[80vh] bg-white rounded-[15px] overflow-hidden" #container>
     <div class="signin-signup  absolute top-0 left-0 w-full h-full flex items-center justify-around z-[5]">
-      <form action="" class="sign-in-form flex items-center justify-center flex-col w-[40%] min-w-[238px] py-0 px-2.5">
+      
+      <form action="" (ngSubmit)="datosInicioSesion()" class="sign-in-form flex items-center justify-center flex-col w-[40%] min-w-[238px] py-0 px-2.5">
         <h2 class="title">Iniciar sesión</h2>
+        <!-- imput para el correo -->
         <div class="input-field">
           <i class="fa fa-user"></i>
-          <input type="text" placeholder="Correo" />
+          <input type="text" placeholder="Correo" [(ngModel)]="email" name="email" />
         </div>
-
+        <!-- imput para la contraseña -->
         <div class="input-field">
           <i class="fa fa-lock"></i>
-          <input type="password" placeholder="Contraseña" />
+          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password"/>
         </div>
-        <input type="submit" value="Acceder" class="btn" />
+        <input type="submit" value="Acceder" class="btn"  />
         <p class="social-text">O inicia sesión mediante</p>
         <div class="social-media">
           <a href="" class="social-icon">
@@ -21,36 +23,41 @@
           <a href="" class="social-icon">
             <i class="fab fa-facebook"></i>
           </a>
-          <a href="" class="social-icon">
-            <i class="fab fa-x"></i>
-          </a>
-          <a href="" class="social-icon">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
         </div>
         <p class="account-text"> ¿No tienes una cuenta? <a href="#" id="sign-up-btn-2" #signUpBtn2>Únete</a></p>
       </form>
-      <form action="" class="sign-up-form flex items-center justify-center flex-col w-[40%] min-w-[238px] py-0 px-2.5">
+
+      <form action="" (ngSubmit)="datosCrearSesion()" class="sign-up-form flex items-center justify-center flex-col w-[40%] min-w-[238px] py-0 px-2.5">
         <h2 class="title">Únete</h2>
+        <!-- imput para el nombre -->
         <div class="input-field">
           <i class="fa fa-user"></i>
-          <input type="text" placeholder="Nombre" />
+          <input type="text" placeholder="Nombre" [(ngModel)]="name" name = 'name' />
         </div>
+        <!-- imput para la edad -->
+        <div class="input-field">
+          <i class="fa fa-pager"></i>
+          <input type="number" placeholder="Edad" [(ngModel)]="age" name="age"/>
+        </div>
+        <!-- imput para la provincia -->
+        <div class="input-field province">
+          <i class="fa fa-map-marker"></i> 
+          <select [(ngModel)]="selectedProvince" name="province">
+            <option value="" disabled selected class="placeholder">Selecciona una provincia</option>
+            <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
+          </select>
+        </div>
+       <!-- imput para el correo -->
         <div class="input-field">
           <i class="fa fa-envelope"></i>
-          <input type="text" placeholder="Correo" />
+          <input type="text" placeholder="Correo" [(ngModel)]="email" name="email"/>
         </div>
-
+        <!-- imput para la contraseña -->
+        <div class="input-field">
+          <i class="fa fa-lock"></i>
+          <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" />
+        </div>
         
-
-        <div class="input-field">
-          <i class="fa fa-lock"></i>
-          <input type="password" placeholder="Contraseña" />
-        </div>
-        <div class="input-field">
-          <i class="fa fa-lock"></i>
-          <input type="int" placeholder="Contraseña" />
-        </div>
         <input type="submit" value="Registrarse" class="btn" />
         
         <p class="social-text">O únete mediante</p>
@@ -60,12 +67,6 @@
           </a>
           <a href="" class="social-icon">
             <i class="fab fa-facebook"></i>
-          </a>
-          <a href="" class="social-icon">
-            <i class="fab fa-x"></i>
-          </a>
-          <a href="" class="social-icon">
-            <i class="fab fa-linkedin-in"></i>
           </a>
         </div>
         <p class="account-text"> ¿Ya tienes una cuenta? <a href="#" id="sign-in-btn-2" #signInBtn2>Inicia sesión</a></p>

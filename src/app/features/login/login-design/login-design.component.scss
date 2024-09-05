@@ -39,6 +39,24 @@ form.sign-up-form {
     transition-delay: 1s;
 }
 
+.province i { 
+    flex: 1;
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+
+}
+.province select{
+    width: 80%;
+    appearance: none;
+    outline: none;
+    background: #f0f0f0;
+    color: #444;
+    margin-right: 15px;
+    
+}
+
+
 .title {
     font-size: 35px;
     color: $primary_color;
