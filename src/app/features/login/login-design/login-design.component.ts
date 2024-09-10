@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthDemoService } from 'src/app/core/services/auth/auth-demo.service';
 
 
 
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login-design.component.scss'
 })
 export class LoginDesignComponent implements AfterViewInit {
+  constructor(private authDemoService:AuthDemoService){}
 
   name:string = '';
   provinces:string[] = [
@@ -56,6 +58,16 @@ export class LoginDesignComponent implements AfterViewInit {
   datosInicioSesion():void{
     console.log('mi correo: ', this.email)
     console.log('mi password: ', this.password)
+
+    const data = { key: 'value' }; // Ajusta los datos según sea necesario
+    this.authDemoService.demoEndpoint(data).subscribe({
+      next: (response) => {
+        console.log('Response:', response);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
   }
 
   //prueba de crear sesion
