@@ -20,9 +20,9 @@ export class AppComponent {
   title = 'voting-frontend';
   constructor() {
     // Inicializar Firebase
-    initializeApp(environment.firebaseConfig);
+    /* initializeApp(environment.firebaseConfig);
     // Puedes inicializar otros servicios aquí si es necesario
     const auth = getAuth();
-    const firestore = getFirestore();
+    const firestore = getFirestore(); */
   }
 }
