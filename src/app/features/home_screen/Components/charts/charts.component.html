@@ -1,0 +1,187 @@
+
+<div class="">
+    <div class="d-flex justify-center p-4">
+        <p class="titulo-principal">Intención de voto - Presidente Ecuador 2025-2029</p>
+    </div>
+    <div class="flex sm:flex-row flex-col justify-center items-center sm:justify-around sm:m-[2%]">
+        <div class="justify-center">
+            <div class="div-card">
+                <h1>TOTAL VOTOS</h1>
+                <p class="text-2xl"><b>{{total}}</b></p>
+            </div>
+            <br>
+            <div class="div-card">
+                <h1>Expresa tu intensión</h1>
+                <br>
+                <button pButton
+                    label=" 🗳️ Votar"
+                    class="btn"
+                    (click)="showDialog()">
+                </button>
+            </div>
+        </div>
+        <div class="justify-center div-card">
+            <h1>Filtros</h1>
+            <p-divider align="center" type="solid">
+                <b>Provincias</b>
+            </p-divider>
+            <p-dropdown
+                [styleClass]="'mt-4'"
+                [style]="{'width':'230px'}"
+                [options]="cities" 
+                [(ngModel)]="selectedProvince" 
+                optionLabel="name" 
+                placeholder="Selecione provincia" />
+            
+            <p-divider align="center" type="solid">
+                <b>Candidatos</b>
+            </p-divider>
+            <p-dropdown
+                    [styleClass]="'mt-4'"
+                    [style]="{'width':'230px'}"
+                    [options]="cities" 
+                    [(ngModel)]="selectedProvince" 
+                    optionLabel="name" 
+                    placeholder="Selecione candidato" />
+        </div>
+        <div class="justify-center">
+            <div class="div-card-g">
+                <h1>Distribución de votos</h1>
+                <br>
+                <p-chart type="doughnut" [data]="data"  />
+            </div>
+        </div>
+    </div>
+    <div class="p-10 justify-center">
+
+        <h1 style="border-radius: 15px 15px 0 0;">Intensiones de voto {{selectedProvince?.name}} - Fecha de corte: {{ fechaActual | date:'dd/MM/yyyy' }}</h1>
+        <p-chart type="bar" [data]="basicData" [options]="options_bar"/>
+    </div>
+    
+</div>
+
+<p-sidebar [(visible)]="votingSideBar"
+            [fullScreen]="true"
+            [baseZIndex]="100"
+            styleClass="px-10">
+            <ng-template pTemplate="header">
+                <p class="titulo-principal">Elije un candidato</p>
+            </ng-template>
+            <!-- <app-voting-screen /> -->
+        
+    <p-table
+    [value]="json_candidatos"
+    [columns]="columns"
+    *ngIf="recargar"
+    selectionMode="single"
+    [(selection)]="candidateRowSelection"
+    (onRowSelect)="onRowSelectCandidate($event)"
+    (onRowUnselect)="onRowUnselectCandidate($event)"
+    [scrollable]="true"
+    scrollHeight="500px"
+    >
+    <!--Header-->
+        <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let columna of columns" class="cabecera">
+            {{ columna.header}}
+            </th>
+        </tr>
+        </ng-template>
+        <!--CUERPO DE LA TABLA-->
+        <ng-template pTemplate="body" let-dataCandidate>
+            <tr [pSelectableRow]="dataCandidate">
+                <td *ngFor="let col of columns" >
+                <span class="p-column-title">{{col.header}}</span>
+                <div [ngSwitch]="col.field">
+                    <img *ngSwitchCase="'image'" src="{{dataCandidate[col.field]}}" alt="candidate" class="w-14 h-14 sm:w-28 sm:h-28">
+                    <span *ngSwitchDefault>
+                        {{dataCandidate[col.field]}}
+                    </span>
+                </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-sidebar>
+
+
+<!-- Side Message -->
+<p-toast />
+<!-- Confirmation window -->
+<p-confirmDialog [style]="{width: '300px'}" [baseZIndex]="20"  [closable]="false" #cd>
+    <p-footer>
+        <button pButton
+            icon="pi pi-check"
+            label="Votar"
+            class="btn text-center"
+            (click)="cd.accept()">
+        </button>
+
+        <button pButton
+            icon="pi pi-times"
+            label="Cancelar"
+            class="boton_no text-center"
+            (click)="cd.reject()">
+        </button>
+    </p-footer>
+</p-confirmDialog>
+
+
+<!-- Data recolection -->
+<p-dialog header="Registro del voto" [modal]="true" 
+closable="false" 
+[(visible)]="visibleRecord" 
+[baseZIndex]="1000"
+[style]="{ width: '20rem' }">
+    <ng-template pTemplate="content">
+        <div class="mb-4">
+            <form [formGroup]="formRegister">
+                <div class="mb-3">
+                    <label>Correo <small
+                    class="text-red-600 ml-1">*</small></label>
+                    <div class="p-input-filled">
+                        <input pInputText
+                        class="w-[263.1px]"
+                        type="text"
+                        formControlName="correo">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="">Provincia<small
+                    class="text-red-600 ml-1">*</small></label>
+                    <div class="p-input-filled">
+                        <p-dropdown 
+                            [options]="cities"
+                            optionLabel="name"
+                            placeholder="Seleccione una provincia"
+                            formControlName="provincia">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="">Edad<small
+                    class="text-red-600 ml-1">*</small></label>
+                    <div class="p-input-filled">
+                    <p-inputNumber
+                        [style]="{'width':'263.1px'}"
+                        [min]="0"
+                        [max]="4"
+                        formControlName="edad"></p-inputNumber>
+                    </div>
+                </div>
+            </form>
+            <footer class="flex justify-center">
+                <button pButton pRipple
+                    [label]="'Guardar'"
+                    (click)="guardarVoto()"
+                    class="btn"></button>
+                <button pButton pRipple
+                    [label]="'Cancelar'"
+                    severity="danger"
+                    (click)="guardarVoto()"
+                    class="boton_no"></button>
+            </footer>
+        </div>
+    </ng-template>
+</p-dialog>
