@@ -2,6 +2,7 @@ import {  Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 //PrimeNG
 import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
@@ -16,14 +17,10 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { InputNumberModule } from 'primeng/inputnumber';
-
-//Own components
-
-interface City {
-  name: string;
-  code: number;
-}
-
+// Models
+import { ProvinceModule } from '../../models/ProvinceModule';
+// Services
+import { ProvinceService } from 'src/app/core/services/province/province.service';
 @Component({
   selector: 'app-charts',
   standalone: true,
@@ -41,9 +38,9 @@ export class ChartsComponent implements OnInit{
   options_bar : any;
   basicData: any;
   data: any;
-  cities: City[] | undefined;
-  selectedProvince: City | undefined;
-  selectedProvince_2: City | undefined;
+  cities: ProvinceModule[] | undefined;
+  selectedProvince: ProvinceModule | undefined;
+  selectedProvince_2: ProvinceModule | undefined;
   candidates_list = ['Luisa González', 'Pedro Granja', 'Daniel Noboa', 'Francesco Tabacchi']
 
   //
@@ -53,38 +50,12 @@ export class ChartsComponent implements OnInit{
     private confirmationService: ConfirmationService, 
     private messageService: MessageService,
     private _formBuilder: FormBuilder,
+    private _province: ProvinceService
   ) {
     this.columns = [
       {field: 'name', header: 'Candidato'},
       {field: 'image', header: 'Fotografía'},
       {field: 'numberParty', header: 'Partido'}
-    ];
-
-    this.cities = [
-      { name: 'Azuay', code: 1 },
-      { name: 'Bolívar', code: 2 },
-      { name: 'Cañar', code: 3 },
-      { name: 'Carchi', code: 4 },
-      { name: 'Chimborazo', code: 5 },
-      { name: 'Cotopaxi', code: 6 },
-      { name: 'El Oro', code: 7 },
-      { name: 'Esmeraldas', code: 8 },
-      { name: 'Galápagos', code: 9 },
-      { name: 'Guayas', code: 10 },
-      { name: 'Imbabura', code: 11 },
-      { name: 'Loja', code: 12 },
-      { name: 'Los Ríos', code: 13 },
-      { name: 'Manabí', code: 14 },
-      { name: 'Morona Santiago', code: 15 },
-      { name: 'Napo', code: 16 },
-      { name: 'Orellana', code: 17 },
-      { name: 'Pastaza', code: 18 },
-      { name: 'Pichincha', code: 19 },
-      { name: 'Santa Elena', code: 20 },
-      { name: 'Santo Domingo', code: 21 },
-      { name: 'Sucumbíos', code: 22 },
-      { name: 'Tungurahua', code: 23 },
-      { name: 'Zamora Chinchipe', code: 24 }
     ];
   }
 
@@ -99,8 +70,7 @@ export class ChartsComponent implements OnInit{
   
 
   ngOnInit(): void {
-      
-
+    this.obtenerProvincias();
     //Gráfico de barras
       this.basicData = {
         labels: this.candidates_list,
@@ -140,6 +110,14 @@ export class ChartsComponent implements OnInit{
             }
         ]
       };
+  }
+
+  //Obtener listado de provincias
+  obtenerProvincias(): void {
+    this._province.getProvinces()
+    .then((res) => {
+      this.cities = res;
+    })
   }
 
   // Sidebar
