@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { environment } from '@environments/environment';
+import { CandidateModule } from 'src/app/features/home_screen/models/CandidateModule';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidateService {
-  private apiUrl = `${environment.apiUrl}/candidates`;
+  private apiUrl = `${environment.apiUrl}/api/candidates`;
 
   constructor(private http: HttpClient) {}
 
-  getCandidates(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getCandidates(): Observable<CandidateModule[]> {
+    return this.http.get<CandidateModule[]>(environment.apiUrl + '/api/candidates');
   }
 
   getCandidateById(id: string): Observable<any> {

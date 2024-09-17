@@ -31,7 +31,8 @@
                 [options]="cities" 
                 [(ngModel)]="selectedProvince" 
                 optionLabel="name" 
-                placeholder="Selecione provincia" />
+                placeholder="Seleccione provincia"
+                (onChange)="filtro($event)" />
             
             <p-divider align="center" type="solid">
                 <b>Candidatos</b>
@@ -39,10 +40,11 @@
             <p-dropdown
                     [styleClass]="'mt-4'"
                     [style]="{'width':'283px'}"
-                    [options]="cities" 
-                    [(ngModel)]="selectedProvince" 
+                    [options]="candidatos" 
+                    [(ngModel)]="selectedCandidate" 
                     optionLabel="name" 
-                    placeholder="Selecione candidato" />
+                    placeholder="Seleccione candidato"
+                    (onChange)="filtro($event)" />
         </div>
         <div class="justify-center">
             <div class="div-card-g">
@@ -54,7 +56,9 @@
     </div>
     <div class="p-10 justify-center">
 
-        <h1 style="border-radius: 15px 15px 0 0;">Intensiones de voto {{selectedProvince?.name}} - Fecha de corte: {{ fechaActual | date:'dd/MM/yyyy' }}</h1>
+        <h1 style="border-radius: 15px 15px 0 0;">Intensiones de voto - Fecha de corte: {{ fechaActual | date:'dd/MM/yyyy' }}</h1>
+        <h1 *ngIf="selectedCandidate!">{{selectedCandidate!.name}}</h1>
+        <h1 *ngIf="selectedProvince!">{{selectedProvince!.name}}</h1>
         <p-chart type="bar" [data]="basicData" [options]="options_bar"/>
     </div>
     
@@ -63,14 +67,14 @@
 <p-sidebar [(visible)]="votingSideBar"
             [fullScreen]="true"
             [baseZIndex]="100"
-            styleClass="px-10">
+            styleClass="px-0">
             <ng-template pTemplate="header">
                 <p class="titulo-principal">Elije un candidato</p>
             </ng-template>
             <!-- <app-voting-screen /> -->
         
     <p-table
-    [value]="json_candidatos"
+    [value]="candidateData!"
     [columns]="columns"
     *ngIf="recargar"
     selectionMode="single"
