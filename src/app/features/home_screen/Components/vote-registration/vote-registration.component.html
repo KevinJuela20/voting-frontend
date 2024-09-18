@@ -1,0 +1,69 @@
+<p-dialog
+  header="Registro del voto"
+  [modal]="true"
+  closable="false"
+  [(visible)]="visibleRecord"
+  [baseZIndex]="1000"
+  [style]="{ width: '24rem', height: '29rem', }"
+>
+  <ng-template pTemplate="content">
+    <div class="mb-4">
+      <form [formGroup]="formRegister">
+        <div class="mb-3">
+          <label>Correo <small class="text-red-600 ml-1">*</small></label>
+          <div class="p-input-filled pt-2">
+            <input
+              pInputText
+              class="w-[21rem]"
+              type="text"
+              formControlName="correo"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class=""
+            >Provincia<small class="text-red-600 ml-1">*</small></label
+          >
+          <div class="p-input-filled pt-2">
+            <p-dropdown
+              [style]="{ width: '21rem' }"
+              [options]="cities"
+              optionLabel="name"
+              placeholder="Seleccione una provincia"
+              formControlName="provincia"
+            >
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="">Edad<small class="text-red-600 ml-1">*</small></label>
+          <div class="p-input-filled pt-2">
+            <p-inputNumber
+              [style]="{ width: '21rem' }"
+              [min]="0"
+              [max]="4"
+              formControlName="edad"
+            ></p-inputNumber>
+          </div>
+        </div>
+      </form>
+      <footer class="flex justify-center pt-7">
+        <button
+          pButton
+          pRipple
+          [label]="'Guardar'"
+          (click)="guardarVoto()"
+          class="btn"
+        ></button>
+        <button
+          pButton
+          pRipple
+          [label]="'Cancelar'"
+          severity="danger"
+          (click)="guardarVoto()"
+          class="boton_no"
+        ></button>
+      </footer>
+    </div>
+  </ng-template>
+</p-dialog>
