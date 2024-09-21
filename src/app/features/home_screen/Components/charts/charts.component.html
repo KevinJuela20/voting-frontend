@@ -22,6 +22,7 @@
           pButton
           label=" 🗳️ Votar"
           class="btn"
+          aria-label="Votar"
           (click)="showDialog()"
         ></button>
       </div>
@@ -37,7 +38,8 @@
         [options]="cities"
         [(ngModel)]="selectedProvince"
         optionLabel="name"
-        placeholder="Selecione provincia"
+        placeholder="Seleccione provincia"
+        (onChange)="filtro($event)"
       />
 
       <p-divider align="center" type="solid">
@@ -46,10 +48,11 @@
       <p-dropdown
         [styleClass]="'mt-4'"
         [style]="{ width: '283px' }"
-        [options]="cities"
-        [(ngModel)]="selectedProvince"
+        [options]="candidatos"
+        [(ngModel)]="selectedCandidate"
         optionLabel="name"
-        placeholder="Selecione candidato"
+        placeholder="Seleccione candidato"
+        (onChange)="filtro($event)"
       />
     </div>
     <div class="justify-center">
@@ -62,9 +65,11 @@
   </div>
   <div class="p-10 justify-center">
     <h1 style="border-radius: 15px 15px 0 0">
-      Intensiones de voto {{ selectedProvince?.name }} - Fecha de corte:
+      Intensiones de voto - Fecha de corte:
       {{ fechaActual | date : "dd/MM/yyyy" }}
     </h1>
+    <h1 *ngIf="selectedCandidate!">{{ selectedCandidate!.name }}</h1>
+    <h1 *ngIf="selectedProvince!">{{ selectedProvince!.name }}</h1>
     <p-chart type="bar" [data]="basicData" [options]="options_bar" />
   </div>
 </div>
@@ -73,7 +78,7 @@
   [(visible)]="votingSideBar"
   [fullScreen]="true"
   [baseZIndex]="100"
-  styleClass="px-10"
+  styleClass="px-0"
 >
   <ng-template pTemplate="header">
     <p class="titulo-principal">Elije un candidato</p>
@@ -81,7 +86,7 @@
   <!-- <app-voting-screen /> -->
 
   <p-table
-    [value]="json_candidatos"
+    [value]="candidateData!"
     [columns]="columns"
     *ngIf="recargar"
     selectionMode="single"
@@ -136,6 +141,8 @@
       icon="pi pi-check"
       label="Votar"
       class="btn text-center"
+      aria-label="Votar"
+
       (click)="cd.accept()"
     ></button>
 
@@ -144,6 +151,8 @@
       icon="pi pi-times"
       label="Cancelar"
       class="boton_no text-center"
+      aria-label="Cancelar"
+
       (click)="cd.reject()"
     ></button>
   </p-footer>
@@ -156,7 +165,7 @@
   closable="false"
   [(visible)]="visibleRecord"
   [baseZIndex]="1000"
-  [style]="{ width: '24rem', height: '29rem', }"
+  [style]="{ width: '24rem', height: '32rem', }"
 >
   <ng-template pTemplate="content">
     <div class="mb-4">
@@ -169,9 +178,25 @@
               class="w-[21rem]"
               type="text"
               formControlName="correo"
+              placeholder="Introduce una contraseña"
             />
+            <div
+              *ngIf="
+                formRegister.get('correo')?.touched &&
+                formRegister.get('correo')?.invalid
+              "
+              class="text-red-600"
+            >
+              <small *ngIf="formRegister.get('correo')?.errors?.['required']"
+                >Correo es requerido.</small
+              >
+              <small *ngIf="formRegister.get('correo')?.errors?.['email']"
+                >Correo no es válido.</small
+              >
+            </div>
           </div>
         </div>
+
         <div class="mb-3">
           <label class=""
             >Provincia<small class="text-red-600 ml-1">*</small></label
@@ -182,9 +207,20 @@
               [options]="cities"
               optionLabel="name"
               placeholder="Seleccione una provincia"
-              formControlName="provincia"
+              (onChange)="onProvinciaChange($event)"
             >
             </p-dropdown>
+            <div
+              *ngIf="
+                formRegister.get('provincia')?.touched &&
+                formRegister.get('provincia')?.invalid
+              "
+              class="text-red-600"
+            >
+              <small *ngIf="formRegister.get('provincia')?.errors?.['required']"
+                >Provincia es requerida.</small
+              >
+            </div>
           </div>
         </div>
         <div class="mb-3">
@@ -193,9 +229,29 @@
             <p-inputNumber
               [style]="{ width: '21rem' }"
               [min]="0"
-              [max]="4"
+              [max]="120"
               formControlName="edad"
+              [mode]="'decimal'"
+              [step]="1"
+              [useGrouping]="false"
             ></p-inputNumber>
+            <div
+              *ngIf="
+                formRegister.get('edad')?.touched &&
+                formRegister.get('edad')?.invalid
+              "
+              class="text-red-600"
+            >
+              <small *ngIf="formRegister.get('edad')?.errors?.['required']"
+                >Edad es requerida.</small
+              >
+              <small *ngIf="formRegister.get('edad')?.errors?.['min']"
+                >Edad debe ser al menos 0.</small
+              >
+              <small *ngIf="formRegister.get('edad')?.errors?.['max']"
+                >Edad no puede ser mayor a 120.</small
+              >
+            </div>
           </div>
         </div>
       </form>
@@ -205,6 +261,8 @@
           pRipple
           [label]="'Guardar'"
           (click)="guardarVoto()"
+          aria-label="Guardar"
+
           class="btn"
         ></button>
         <button
@@ -212,7 +270,9 @@
           pRipple
           [label]="'Cancelar'"
           severity="danger"
-          (click)="guardarVoto()"
+          (click)="CancelarVoto()"
+          aria-label="Cancelar"
+
           class="boton_no"
         ></button>
       </footer>
